@@ -7,9 +7,12 @@
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-ejs-layouts": "^2.5.0",
+    "mongoose": "^5.7.13",
     "nodemon": "^2.0.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "dotenv": "^8.2.0"
+  },
   "scripts": {
     "start": "node server.js",
     "devStart": "nodemon server.js"
