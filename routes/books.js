@@ -15,14 +15,24 @@ const upload = multer({
 })
 
 router.get('/', async (req,res)=>{
+    let query = Book.find()
+    if (req.query.title != null && req.query.title !=''){
+        query = query.regex('title', new RegExp(req.query.title,'i'))
+    }
+    if (req.query.publishBefore != null && req.query.publishBefore !=''){
+        query = query.lte('publishDate', req.query.publishBefore)
+    }
+    if (req.query.publishAfter != null && req.query.publishAfter !=''){
+        query = query.gte('publishDate', req.query.publishAfter)
+    }
     try {
-        const books = await Book.find({})
+        const books = await query.exec()
         res.render('books/index',{
             books:books,
             searchOptions:req.query
         })
     } catch {
-        res.send('error fetching books')
+        res.redirect('/')
     }
 });
 router.get('/new',async (req,res)=>{
