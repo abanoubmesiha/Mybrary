@@ -15,7 +15,15 @@ const upload = multer({
 })
 
 router.get('/', async (req,res)=>{
-    res.send('all books')
+    try {
+        const books = await Book.find({})
+        res.render('books/index',{
+            books:books,
+            searchOptions:req.query
+        })
+    } catch {
+        res.send('error fetching books')
+    }
 });
 router.get('/new',async (req,res)=>{
     renderNewPage(res,new Book())
